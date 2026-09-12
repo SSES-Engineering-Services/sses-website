@@ -1,0 +1,555 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+:root {
+  --navy-950: #081a2b;
+  --navy-900: #0b2239;
+  --navy-800: #12324d;
+
+  --orange-500: #f28c28;
+  --orange-600: #e57916;
+
+  --slate-50: #f5f7f8;
+  --slate-100: #edf1f3;
+  --slate-200: #dce2e7;
+  --slate-300: #cbd4da;
+  --slate-500: #687784;
+  --slate-600: #52606d;
+  --slate-900: #17212b;
+
+  --white: #ffffff;
+}
+
+@theme {
+  --font-display: "Manrope", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --color-navy-950: #081a2b;
+  --color-navy-900: #0b2239;
+  --color-navy-800: #12324d;
+
+  --color-orange-500: #f28c28;
+  --color-orange-600: #e57916;
+
+  --color-slate-50: #f5f7f8;
+  --color-slate-100: #edf1f3;
+  --color-slate-200: #dce2e7;
+  --color-slate-300: #cbd4da;
+  --color-slate-500: #687784;
+  --color-slate-600: #52606d;
+  --color-slate-900: #17212b;
+}
+
+/* =========================================
+   BASE
+========================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+  background: var(--white);
+  color: var(--slate-900);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: var(--orange-500);
+  color: var(--white);
+}
+
+
+/* =========================================
+   PREMIUM LIGHT BACKGROUND
+========================================= */
+
+.sses-light-surface {
+  position: relative;
+  background:
+    radial-gradient(
+      circle at 20% 10%,
+      rgba(242, 140, 40, 0.035),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 80% 90%,
+      rgba(18, 50, 77, 0.04),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f7f9fa 100%
+    );
+}
+
+
+/* =========================================
+   CHALK / PREMIUM CARD SURFACE
+========================================= */
+
+.sses-chalk-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.96),
+      rgba(245, 247, 248, 0.9)
+    );
+
+  border: 1px solid rgba(220, 226, 231, 0.9);
+
+  box-shadow:
+    0 18px 45px rgba(8, 26, 43, 0.04),
+    0 2px 8px rgba(8, 26, 43, 0.02);
+}
+
+
+/* =========================================
+   GLASS SYSTEM
+========================================= */
+
+.sses-glass {
+  background: rgba(255, 255, 255, 0.07);
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+
+  backdrop-filter: blur(16px);
+
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.sses-glass-light {
+  background: rgba(255, 255, 255, 0.72);
+
+  border: 1px solid rgba(255, 255, 255, 0.7);
+
+  backdrop-filter: blur(18px);
+
+  -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* =========================================
+   SUBTLE GRAIN
+========================================= */
+
+.sses-noise {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.055;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.7'/%3E%3C/svg%3E");
+
+  mix-blend-mode: soft-light;
+}
+
+
+/* =========================================
+   TECHNICAL GRID
+========================================= */
+
+.sses-technical-grid {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.045) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.045) 1px,
+      transparent 1px
+    );
+
+  background-size: 72px 72px;
+
+  mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 20%,
+      transparent 78%
+    );
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 20%,
+      transparent 78%
+    );
+}
+
+
+/* LIGHT GRID */
+
+.sses-technical-grid-light {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      rgba(8, 26, 43, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(8, 26, 43, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 80px 80px;
+
+  mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 15%,
+      transparent 80%
+    );
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at center,
+      black 15%,
+      transparent 80%
+    );
+}
+
+
+/* =========================================
+   HERO SPOTLIGHT
+========================================= */
+
+.sses-spotlight {
+  position: absolute;
+
+  width: 60vw;
+  height: 60vw;
+
+  max-width: 900px;
+  max-height: 900px;
+
+  border-radius: 999px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(18, 50, 77, 0.9) 0%,
+      rgba(11, 34, 57, 0.55) 35%,
+      transparent 70%
+    );
+
+  filter: blur(30px);
+
+  pointer-events: none;
+
+  animation: ssesSpotlight 14s ease-in-out infinite alternate;
+}
+
+
+@keyframes ssesSpotlight {
+  0% {
+    transform:
+      translate(-8%, -4%)
+      scale(1);
+  }
+
+  100% {
+    transform:
+      translate(8%, 6%)
+      scale(1.12);
+  }
+}
+
+
+/* =========================================
+   ORANGE AMBIENT GLOW
+========================================= */
+
+.sses-orange-glow {
+  position: absolute;
+
+  width: 380px;
+  height: 380px;
+
+  border-radius: 999px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(242, 140, 40, 0.16),
+      rgba(242, 140, 40, 0.04) 35%,
+      transparent 70%
+    );
+
+  filter: blur(20px);
+
+  pointer-events: none;
+
+  animation: ssesGlowPulse 8s ease-in-out infinite;
+}
+
+
+@keyframes ssesGlowPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+
+
+/* =========================================
+   ENGINEERING SIGNAL
+========================================= */
+
+.sses-signal {
+  animation:
+    ssesSignalPulse
+    2.8s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes ssesSignalPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================
+   SECTION DIVIDER
+========================================= */
+
+.sses-section-line {
+  position: relative;
+}
+
+.sses-section-line::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(242, 140, 40, 0.55),
+      transparent
+    );
+}
+
+
+/* =========================================
+   CLIENT CAROUSEL
+========================================= */
+
+@keyframes clientCarousel {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.client-carousel {
+  animation: clientCarousel 50s linear infinite;
+  will-change: transform;
+}
+
+.client-carousel:hover {
+  animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+  .client-carousel {
+    animation-duration: 35s;
+  }
+}
+
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+
+    scroll-behavior: auto !important;
+  }
+
+  .client-carousel {
+    animation: none;
+  }
+}
+
+/* =========================================
+   MOBILE RESPONSIVE FOUNDATION
+   Keeps the cinematic desktop layouts intact
+   while preventing small-screen clipping.
+========================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  html {
+    overflow-x: hidden;
+  }
+
+  body {
+    min-width: 320px;
+  }
+
+  #root {
+    overflow-x: clip;
+  }
+
+  /* Avoid accidental long-word overflow in corporate copy. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  a,
+  span {
+    overflow-wrap: anywhere;
+  }
+
+  /* Touch targets remain comfortable without enlarging the visual UI. */
+  button,
+  a[role="button"] {
+    touch-action: manipulation;
+  }
+
+  /* Prevent decorative fixed-size elements from creating a horizontal
+     scroll area when a component is changed later. */
+  section,
+  main,
+  footer,
+  header {
+    max-width: 100%;
+  }
+
+  /* Better mobile form controls. */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  /* Disable hover-only transforms on touch devices. */
+  @media (hover: none) {
+    .group:hover .group-hover\:scale-105,
+    .group:hover .group-hover\:scale-\[1\.03\] {
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sses-spotlight,
+  .sses-orange-glow,
+  .sses-signal {
+    animation: none !important;
+  }
+}
