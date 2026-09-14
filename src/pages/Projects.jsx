@@ -392,7 +392,7 @@ export default function Projects() {
           HERO
       ===================================================== */}
 
-      <section className="relative min-h-[92vh] overflow-hidden bg-[#050B11] text-white">
+      <section className="relative min-h-[70svh] overflow-hidden bg-[#050B11] text-white md:min-h-[92vh]">
 
         {/* ===================================================
             BACKGROUND IMAGE
@@ -473,9 +473,9 @@ export default function Projects() {
             HERO CONTENT
         =================================================== */}
 
-        <div className="relative z-10 flex min-h-[92vh] items-end">
+        <div className="relative z-10 flex min-h-[70svh] items-start pt-28 md:min-h-[92vh] md:items-end md:pt-0">
 
-          <div className="mx-auto w-full max-w-[1600px] px-4 pb-16 sm:px-6 sm:pb-20 md:px-10 lg:px-14 lg:pb-24">
+  <div className="mx-auto w-full max-w-[1600px] px-4 pb-12 sm:px-6 sm:pb-20 md:px-10 lg:px-14 lg:pb-24">
 
             <div className="max-w-5xl">
 

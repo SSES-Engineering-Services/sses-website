@@ -47,6 +47,9 @@ function ContactForm() {
 
       console.log("Sending contact inquiry:", submission);
 
+      /*
+       * 1. Save the enquiry to Supabase.
+       */
       const { error } = await supabase
         .from("contact_submissions")
         .insert(submission);
@@ -56,8 +59,62 @@ function ContactForm() {
         throw error;
       }
 
-      console.log("Contact inquiry submitted successfully.");
+      console.log("Contact inquiry saved to Supabase.");
 
+      /*
+       * 2. Send the enquiry to Google Apps Script.
+       *
+       * Apps Script will then send the notification
+       * through Resend to the SSES company email.
+       */
+      const appsScriptUrl =
+        import.meta.env.VITE_GOOGLE_DRIVE_UPLOAD_URL;
+
+      if (!appsScriptUrl) {
+        throw new Error(
+          "Missing VITE_GOOGLE_DRIVE_UPLOAD_URL environment variable.",
+        );
+      }
+
+      const emailResponse = await fetch(appsScriptUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify({
+          type: "contact",
+          name: submission.name,
+          contactNumber: submission.contact_number,
+          email: submission.email,
+          message: submission.message,
+        }),
+      });
+
+      const emailResult = await emailResponse.json();
+
+      console.log(
+        "Contact email notification response:",
+        emailResult,
+      );
+
+      if (!emailResult.success) {
+        console.error(
+          "Contact email notification failed:",
+          emailResult,
+        );
+
+        /*
+         * The enquiry is already safely stored in Supabase.
+         * Do not tell the visitor that their enquiry failed.
+         */
+        console.warn(
+          "Contact enquiry was saved, but the email notification could not be sent.",
+        );
+      }
+
+      /*
+       * 3. Reset the form after the enquiry has been saved.
+       */
       setFormData({
         name: "",
         phone: "",
@@ -201,3 +258,4 @@ function ContactForm() {
 }
 
 export default ContactForm;
+

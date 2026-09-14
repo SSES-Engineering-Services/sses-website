@@ -365,167 +365,327 @@ function IndustriesHero() {
   );
 
   return (
-    <section
-      ref={heroRef}
-      className="
-        relative
-        h-[2400px]
-        bg-black
-        sm:h-[3200px]
-        lg:h-[4600px]
-      "
-    >
-      <div className="sticky top-0 h-screen overflow-hidden bg-black">
-        <ParticleBackground />
+    <section ref={heroRef} className="relative bg-black">
+      {/* =====================================================
+          DESKTOP — CINEMATIC SCROLL HERO
+      ===================================================== */}
 
-        <HeroTechnicalGrid />
+      <div className="hidden lg:block">
+        <div className="relative h-[4600px] bg-black">
+          <div className="sticky top-0 h-screen overflow-hidden bg-black">
+            <ParticleBackground />
 
-        {/* Background atmosphere */}
-        <div className="pointer-events-none absolute inset-0 z-1">
-          <div className="absolute inset-0 bg-black/15" />
+            <HeroTechnicalGrid />
 
-          <motion.div
-            animate={{
-              scale: [1, 1.08, 1],
-              opacity: [0.25, 0.4, 0.25],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute left-1/2 top-1/2 h-[100vw] w-screen -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-700/5 blur-[120px] sm:h-[80vw] sm:w-[80vw]"
-          />
+            {/* Background atmosphere */}
+            <div className="pointer-events-none absolute inset-0 z-1">
+              <div className="absolute inset-0 bg-black/15" />
+
+              <motion.div
+                animate={{
+                  scale: [1, 1.08, 1],
+                  opacity: [0.25, 0.4, 0.25],
+                }}
+                transition={{
+                  duration: 12,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="absolute left-1/2 top-1/2 h-[80vw] w-[80vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-700/5 blur-[120px]"
+              />
+            </div>
+
+            {/* Main image */}
+            <motion.div
+              style={{
+                width: imageWidth,
+                height: imageHeight,
+                borderRadius: imageRadius,
+              }}
+              className="
+                absolute
+                left-1/2
+                top-1/2
+                z-10
+                -translate-x-1/2
+                -translate-y-1/2
+                overflow-hidden
+                will-change-[width,height,transform]
+              "
+            >
+              <motion.img
+                src={industrialHero}
+                alt="Industrial engineering and safety environment"
+                style={{
+                  scale: imageScale,
+                  filter: useTransform(
+                    [imageBrightness, imageContrast, imageSaturation],
+                    ([brightness, contrast, saturation]) =>
+                      `brightness(${brightness}) contrast(${contrast}) saturate(${saturation})`
+                  ),
+                }}
+                className="h-full w-full object-cover"
+              />
+
+              <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/65 via-transparent to-black/20" />
+
+              <div className="pointer-events-none absolute inset-0 bg-black/10" />
+
+              {/* Image edge vignette */}
+              <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.45)]" />
+
+              {/* Moving technical scanline */}
+              <motion.div
+                style={{
+                  y: scanlineY,
+                }}
+                className="pointer-events-none absolute inset-x-0 top-0 z-20 h-px bg-linear-to-r from-transparent via-orange-400/50 to-transparent shadow-[0_0_18px_rgba(242,140,40,0.35)]"
+              />
+
+              {/* Technical marks */}
+              <div className="pointer-events-none absolute inset-0 opacity-30">
+                <div className="absolute left-[8%] top-[28%] h-px w-36 bg-white/25" />
+                <div className="absolute right-[8%] top-[64%] h-px w-32 bg-white/20" />
+                <div className="absolute bottom-[18%] left-[18%] h-px w-24 bg-orange-400/40" />
+              </div>
+            </motion.div>
+
+            {/* Flowing industry typography */}
+            {heroLabels.map((item, index) => (
+              <SupportingLabel
+                key={item.label}
+                {...item}
+                index={index}
+                scrollYProgress={scrollYProgress}
+              />
+            ))}
+
+            {/* Edge gradients */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-48 bg-linear-to-t from-black via-black/45 to-transparent" />
+
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-32 bg-linear-to-b from-black/75 to-transparent" />
+
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-30 w-24 bg-linear-to-r from-black/55 to-transparent" />
+
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-30 w-24 bg-linear-to-l from-black/55 to-transparent" />
+
+            {/* Top label */}
+            <motion.div
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="absolute left-8 top-8 z-40"
+            >
+              <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/65">
+                SSES / Industries
+              </span>
+            </motion.div>
+
+            {/* Technical corner marker */}
+            <div className="pointer-events-none absolute right-8 top-8 z-40 flex items-center gap-2">
+              <motion.span
+                animate={{
+                  opacity: [0.25, 0.8, 0.25],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="h-1.5 w-1.5 rounded-full bg-orange-400"
+              />
+
+              <span className="font-mono text-[8px] tracking-[0.18em] text-white/35">
+                FIELD / 01
+              </span>
+            </div>
+
+            {/* Scroll indicator */}
+            <div className="absolute bottom-8 left-1/2 z-40 flex -translate-x-1/2 flex-col items-center gap-3">
+              <motion.div
+                animate={{
+                  scaleY: [0.55, 1, 0.55],
+                  opacity: [0.3, 0.8, 0.3],
+                }}
+                transition={{
+                  duration: 2.2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="h-10 w-px origin-top bg-linear-to-b from-transparent via-white/55 to-transparent"
+              />
+
+              <span className="whitespace-nowrap text-[9px] font-medium uppercase tracking-[0.3em] text-white/45">
+                Scroll to explore
+              </span>
+            </div>
+          </div>
         </div>
+      </div>
 
-        {/* Main image */}
+      {/* =====================================================
+          MOBILE — COMPACT HERO
+      ===================================================== */}
+
+      <div className="relative min-h-[520px] overflow-hidden bg-black lg:hidden">
+        {/* Background image */}
         <motion.div
-          style={{
-            width: imageWidth,
-            height: imageHeight,
-            borderRadius: imageRadius,
+          initial={{
+            scale: 1.08,
+            opacity: 0,
           }}
-          className="
-            absolute
-            left-1/2
-            top-1/2
-            z-10
-            -translate-x-1/2
-            -translate-y-1/2
-            overflow-hidden
-            will-change-[width,height,transform]
-          "
+          animate={{
+            scale: 1,
+            opacity: 1,
+          }}
+          transition={{
+            duration: 1.1,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="absolute inset-0"
         >
-          <motion.img
+          <img
             src={industrialHero}
             alt="Industrial engineering and safety environment"
-            style={{
-              scale: imageScale,
-              filter: useTransform(
-                [imageBrightness, imageContrast, imageSaturation],
-                ([brightness, contrast, saturation]) =>
-                  `brightness(${brightness}) contrast(${contrast}) saturate(${saturation})`
-              ),
-            }}
             className="h-full w-full object-cover"
           />
+        </motion.div>
 
-          <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/65 via-transparent to-black/20" />
+        {/* Dark overlays */}
+        <div className="pointer-events-none absolute inset-0 bg-black/45" />
 
-          <div className="pointer-events-none absolute inset-0 bg-black/10" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black via-black/35 to-black/10" />
 
-          {/* Image edge vignette */}
-          <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.45)]" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-black/55 via-transparent to-black/20" />
 
-          {/* Moving technical scanline */}
-          <motion.div
-            style={{
-              y: scanlineY,
-            }}
-            className="pointer-events-none absolute inset-x-0 top-0 z-20 h-px bg-linear-to-r from-transparent via-orange-400/50 to-transparent shadow-[0_0_18px_rgba(242,140,40,0.35)]"
-          />
+        {/* Technical grid */}
+        <HeroTechnicalGrid />
 
-          {/* Subtle horizontal technical marks */}
-          <div className="pointer-events-none absolute inset-0 opacity-30">
-            <div className="absolute left-[8%] top-[28%] h-px w-24 bg-white/25 sm:w-36" />
-            <div className="absolute right-[8%] top-[64%] h-px w-20 bg-white/20 sm:w-32" />
-            <div className="absolute left-[18%] bottom-[18%] h-px w-16 bg-orange-400/40 sm:w-24" />
+        {/* Subtle orange scanline */}
+        <motion.div
+          initial={{
+            x: "-100%",
+          }}
+          animate={{
+            x: "100%",
+          }}
+          transition={{
+            duration: 4.5,
+            repeat: Infinity,
+            repeatDelay: 2,
+            ease: "easeInOut",
+          }}
+          className="pointer-events-none absolute left-0 top-[42%] z-20 h-px w-1/2 bg-linear-to-r from-transparent via-orange-400/50 to-transparent"
+        />
+
+        {/* Top navigation label */}
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: -10,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.6,
+            delay: 0.15,
+          }}
+          className="absolute left-5 top-6 z-30"
+        >
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
+
+            <span className="text-[9px] font-semibold uppercase tracking-[0.24em] text-white/65">
+              SSES / Industries
+            </span>
           </div>
         </motion.div>
 
-        {/* Flowing industry typography */}
-        {heroLabels.map((item, index) => (
-          <SupportingLabel
-            key={item.label}
-            {...item}
-            index={index}
-            scrollYProgress={scrollYProgress}
-          />
-        ))}
-
-        {/* Edge gradients */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-32 bg-linear-to-t from-black via-black/45 to-transparent sm:h-48" />
-
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-24 bg-linear-to-b from-black/75 to-transparent sm:h-32" />
-
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-30 w-16 bg-linear-to-r from-black/55 to-transparent sm:w-24 lg:w-32" />
-
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-30 w-16 bg-linear-to-l from-black/55 to-transparent sm:w-24 lg:w-32" />
-
-        {/* Top label */}
-        <motion.div
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.8,
-            delay: 0.2,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="absolute left-5 top-6 z-40 sm:left-8 sm:top-8 lg:left-16 lg:top-9"
-        >
-          <span className="text-[9px] font-semibold uppercase tracking-[0.24em] text-white/65 sm:text-[10px] sm:tracking-[0.28em]">
-            SSES / Industries
-          </span>
-        </motion.div>
-
-        {/* Technical corner marker */}
-        <div className="pointer-events-none absolute right-5 top-6 z-40 flex items-center gap-2 sm:right-8 sm:top-8 lg:right-16 lg:top-9">
-          <motion.span
-            animate={{
-              opacity: [0.25, 0.8, 0.25],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="h-1.5 w-1.5 rounded-full bg-orange-400"
-          />
-
+        {/* Field indicator */}
+        <div className="absolute right-5 top-6 z-30">
           <span className="font-mono text-[8px] tracking-[0.18em] text-white/35">
             FIELD / 01
           </span>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-6 left-1/2 z-40 flex -translate-x-1/2 flex-col items-center gap-2 sm:bottom-8 sm:gap-3">
+        {/* Main mobile content */}
+        <div className="relative z-30 flex min-h-[520px] items-end px-5 pb-12 pt-28 sm:px-8 sm:pb-14">
           <motion.div
+            initial={{
+              opacity: 0,
+              y: 28,
+            }}
             animate={{
-              scaleY: [0.55, 1, 0.55],
-              opacity: [0.3, 0.8, 0.3],
+              opacity: 1,
+              y: 0,
             }}
             transition={{
-              duration: 2.2,
-              repeat: Infinity,
-              ease: "easeInOut",
+              duration: 0.75,
+              delay: 0.3,
+              ease: [0.22, 1, 0.36, 1],
             }}
-            className="h-7 w-px origin-top bg-linear-to-b from-transparent via-white/55 to-transparent sm:h-10"
-          />
+            className="w-full max-w-xl"
+          >
+            {/* Eyebrow */}
+            <div className="mb-4 flex items-center gap-3">
+              <span className="font-mono text-[9px] font-semibold tracking-[0.2em] text-orange-400">
+                01
+              </span>
 
-          <span className="whitespace-nowrap text-[8px] font-medium uppercase tracking-[0.24em] text-white/45 sm:text-[9px] sm:tracking-[0.3em]">
-            Scroll to explore
-          </span>
+              <span className="h-px w-8 bg-orange-400/60" />
+
+              <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/65">
+                Industrial Expertise
+              </span>
+            </div>
+
+            {/* Title */}
+            <h1 className="max-w-[340px] text-[2.65rem] font-extrabold leading-[0.95] tracking-[-0.045em] text-white sm:max-w-xl sm:text-5xl">
+              Engineering.
+              <br />
+              Safety.
+              <br />
+              <span className="text-white/80">Built for Industry.</span>
+            </h1>
+
+            {/* Description */}
+            <p className="mt-5 max-w-[340px] text-[13px] leading-6 text-white/65 sm:max-w-xl sm:text-sm sm:leading-7">
+              Integrated engineering, safety, environment and fire solutions
+              for demanding industrial and infrastructure environments.
+            </p>
+
+            {/* CTA */}
+            <motion.a
+              href="/contact"
+              whileTap={{
+                scale: 0.98,
+              }}
+              className="mt-7 inline-flex items-center gap-3 bg-orange-500 px-5 py-3.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white transition-colors duration-300 hover:bg-orange-600"
+            >
+              Talk to SSES
+
+              <ArrowRight className="h-3.5 w-3.5" />
+            </motion.a>
+          </motion.div>
         </div>
+
+        {/* Bottom technical markers */}
+        <div className="pointer-events-none absolute bottom-5 right-5 z-30 hidden items-center gap-2 sm:flex">
+          <span className="font-mono text-[8px] tracking-[0.16em] text-white/30">
+            INDUSTRIAL / SAFETY / ENGINEERING
+          </span>
+
+          <span className="h-1.5 w-1.5 rounded-full bg-orange-400/70" />
+        </div>
+
+        {/* Mobile bottom fade */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-24 bg-linear-to-t from-black/80 to-transparent" />
       </div>
     </section>
   );

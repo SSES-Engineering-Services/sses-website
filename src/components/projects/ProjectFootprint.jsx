@@ -998,6 +998,95 @@ function StateIndexItem({
 }
 
 /* =========================================================
+   SELECTED STATE
+========================================================= */
+
+function SelectedStateCard({
+  selectedMeta,
+  selectedProjects,
+  effectiveSelectedState,
+}) {
+  return (
+    <div className="border border-white/10 bg-[#0a2033]">
+      <div className="border-b border-white/10 px-4 py-5 sm:px-5">
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-orange-400">
+              Selected Region
+            </div>
+
+            <h3 className="mt-2 truncate text-lg font-semibold text-white sm:text-xl">
+              {selectedMeta?.name ||
+                "No region selected"}
+            </h3>
+          </div>
+
+          <div className="flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full bg-orange-400 px-3 font-mono text-sm font-semibold text-[#071522]">
+            {selectedProjects.length}
+          </div>
+        </div>
+      </div>
+
+      <div className="px-4 sm:px-5">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={
+              effectiveSelectedState ||
+              "none"
+            }
+            initial={{
+              opacity: 0,
+              y: 10,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -10,
+            }}
+            transition={{
+              duration: 0.25,
+            }}
+          >
+            {selectedProjects.length >
+            0 ? (
+              selectedProjects.map(
+                (
+                  project,
+                  index
+                ) => (
+                  <ProjectListItem
+                    key={
+                      project.id ||
+                      project.slug ||
+                      index
+                    }
+                    project={
+                      project
+                    }
+                    index={
+                      index
+                    }
+                  />
+                )
+              )
+            ) : (
+              <div className="py-10 text-sm text-blue-100/50">
+                No projects currently
+                recorded for this
+                region.
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
+/* =========================================================
    PROJECT FOOTPRINT
 ========================================================= */
 
@@ -1180,155 +1269,156 @@ export default function ProjectFootprint({
 
         <div className="grid gap-5 lg:grid-cols-[1.25fr_0.75fr] lg:gap-8">
           {/* ===================================================
-              MAP
+              LEFT COLUMN — MAP + SELECTED REGION
           ==================================================== */}
 
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{
-              once: true,
-              amount: 0.15,
-            }}
-            className="relative min-w-0 overflow-hidden border border-white/10 bg-[#06111c]"
-          >
-            {/* Map header */}
-
-            <div className="absolute left-4 top-4 z-20 flex items-center gap-3 sm:left-5 sm:top-5">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/4 sm:h-9 sm:w-9">
-                <Globe2
-                  size={15}
-                  className="text-orange-400"
-                />
-              </div>
-
-              <div>
-                <div className="text-[8px] uppercase tracking-[0.22em] text-blue-200/40 sm:text-[9px]">
-                  India
-                </div>
-
-                <div className="mt-1 text-[11px] font-medium text-blue-100/80 sm:text-xs">
-                  Project locations
-                </div>
-              </div>
-            </div>
-
+          <div className="min-w-0">
             {/* =================================================
-                COMPACT RESPONSIVE MAP CONTAINER
-
-                IMPORTANT:
-                The previous version dynamically calculated
-                the SVG size from the container. That could
-                make the map unnecessarily large.
-
-                This version deliberately keeps the map
-                visually compact.
+                MAP
             ================================================== */}
 
-            <div
-              className="
-                flex
-                h-95
-                min-w-0
-                items-center
-                justify-center
-                overflow-hidden
-                px-3
-                pb-8
-                pt-16
-
-                sm:h-107.5
-                sm:px-5
-                sm:pb-8
-                sm:pt-18
-
-                lg:h-125
-                lg:px-8
-                lg:pb-10
-                lg:pt-18
-              "
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{
+                once: true,
+                amount: 0.15,
+              }}
+              className="relative min-w-0 overflow-hidden border border-white/10 bg-[#06111c]"
             >
+              {/* Map header */}
+
+              <div className="absolute left-4 top-4 z-20 flex items-center gap-3 sm:left-5 sm:top-5">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/4 sm:h-9 sm:w-9">
+                  <Globe2
+                    size={15}
+                    className="text-orange-400"
+                  />
+                </div>
+
+                <div>
+                  <div className="text-[8px] uppercase tracking-[0.22em] text-blue-200/40 sm:text-[9px]">
+                    India
+                  </div>
+
+                  <div className="mt-1 text-[11px] font-medium text-blue-100/80 sm:text-xs">
+                    Project locations
+                  </div>
+                </div>
+              </div>
+
+              {/* =================================================
+                  COMPACT RESPONSIVE MAP CONTAINER
+              ================================================== */}
+
               <div
                 className="
-                  relative
                   flex
-                  max-w-full
+                  h-95
+                  min-w-0
                   items-center
                   justify-center
+                  overflow-hidden
+                  px-3
+                  pb-8
+                  pt-16
+
+                  sm:h-107.5
+                  sm:px-5
+                  sm:pb-8
+                  sm:pt-18
+
+                  lg:h-105
+                  lg:px-8
+                  lg:pb-10
+                  lg:pt-18
                 "
               >
-                <India
-                  type="select-single"
-                  size={320}
-                  mapColor="#10283B"
-                  strokeColor="#29465B"
-                  strokeWidth={1}
-                  hoverColor="#1D4863"
-                  selectColor="#F28C28"
-                  hints={true}
-                  onSelect={handleMapSelect}
+                <div
                   className="
+                    relative
+                    flex
                     max-w-full
-                    sm:hidden
+                    items-center
+                    justify-center
                   "
-                />
+                >
+                  <div className="flex w-full items-center justify-center">
+                    <India
+                      type="select-single"
+                      size={420}
+                      mapColor="#10283B"
+                      strokeColor="#29465B"
+                      strokeWidth={1}
+                      hoverColor="#1D4863"
+                      selectColor="#F28C28"
+                      hints={true}
+                      onSelect={handleMapSelect}
+                      className="block max-w-full"
+                    />
+                  </div>
 
-                <div className="hidden sm:block lg:hidden">
-                  <India
-                    type="select-single"
-                    size={400}
-                    mapColor="#10283B"
-                    strokeColor="#29465B"
-                    strokeWidth={1}
-                    hoverColor="#1D4863"
-                    selectColor="#F28C28"
-                    hints={true}
-                    onSelect={handleMapSelect}
-                  />
-                </div>
+                  {/* Active-state indicator */}
 
-                <div className="hidden lg:block">
-                  <India
-                    type="select-single"
-                    size={500}
-                    mapColor="#10283B"
-                    strokeColor="#29465B"
-                    strokeWidth={1}
-                    hoverColor="#1D4863"
-                    selectColor="#F28C28"
-                    hints={true}
-                    onSelect={handleMapSelect}
-                  />
-                </div>
+                  <div className="pointer-events-none absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-orange-400 sm:h-2 sm:w-2" />
 
-                {/* Active-state indicator */}
-
-                <div className="pointer-events-none absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-orange-400 sm:h-2 sm:w-2" />
-
-                  <span className="font-mono text-[7px] uppercase tracking-[0.18em] text-blue-100/40 sm:text-[8px] sm:tracking-[0.2em]">
-                    Tap a state
-                  </span>
+                    <span className="font-mono text-[7px] uppercase tracking-[0.18em] text-blue-100/40 sm:text-[8px]">
+                      Tap a state
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Map corner data */}
+              {/* Map corner data */}
 
-            <div className="absolute bottom-4 right-5 z-20 hidden text-right sm:block">
-              <div className="font-mono text-2xl font-semibold text-white lg:text-3xl">
-                {indiaProjects}
+              <div className="absolute bottom-4 right-5 z-20 hidden text-right sm:block">
+                <div className="font-mono text-2xl font-semibold text-white lg:text-3xl">
+                  {indiaProjects}
+                </div>
+
+                <div className="mt-1 text-[8px] uppercase tracking-[0.2em] text-blue-200/40 lg:text-[9px]">
+                  India projects
+                </div>
               </div>
+            </motion.div>
 
-              <div className="mt-1 text-[8px] uppercase tracking-[0.2em] text-blue-200/40 lg:text-[9px]">
-                India projects
-              </div>
-            </div>
-          </motion.div>
+            {/* =================================================
+                SELECTED STATE
+                Moved directly below the map.
+                Uses the full width of the map column.
+            ================================================== */}
+
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{
+                once: true,
+                amount: 0.15,
+              }}
+              transition={{
+                delay: 0.05,
+              }}
+              className="mt-5"
+            >
+              <SelectedStateCard
+                selectedMeta={
+                  selectedMeta
+                }
+                selectedProjects={
+                  selectedProjects
+                }
+                effectiveSelectedState={
+                  effectiveSelectedState
+                }
+              />
+            </motion.div>
+          </div>
 
           {/* ===================================================
-              INDEX + PROJECTS
+              RIGHT COLUMN — INDEX
           ==================================================== */}
 
           <motion.div
@@ -1417,89 +1507,6 @@ export default function ProjectFootprint({
                 )}
               </div>
             </div>
-
-            {/* =================================================
-                SELECTED STATE
-            ================================================== */}
-
-            <div className="mt-5 border border-white/10 bg-[#0a2033]">
-              <div className="border-b border-white/10 px-4 py-5 sm:px-5">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="min-w-0">
-                    <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-orange-400">
-                      Selected Region
-                    </div>
-
-                    <h3 className="mt-2 truncate text-lg font-semibold text-white sm:text-xl">
-                      {selectedMeta?.name ||
-                        "No region selected"}
-                    </h3>
-                  </div>
-
-                  <div className="flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full bg-orange-400 px-3 font-mono text-sm font-semibold text-[#071522]">
-                    {
-                      selectedProjects.length
-                    }
-                  </div>
-                </div>
-              </div>
-
-              <div className="px-4 sm:px-5">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={
-                      effectiveSelectedState ||
-                      "none"
-                    }
-                    initial={{
-                      opacity: 0,
-                      y: 10,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      y: -10,
-                    }}
-                    transition={{
-                      duration: 0.25,
-                    }}
-                  >
-                    {selectedProjects.length >
-                    0 ? (
-                      selectedProjects.map(
-                        (
-                          project,
-                          index
-                        ) => (
-                          <ProjectListItem
-                            key={
-                              project.id ||
-                              project.slug ||
-                              index
-                            }
-                            project={
-                              project
-                            }
-                            index={
-                              index
-                            }
-                          />
-                        )
-                      )
-                    ) : (
-                      <div className="py-10 text-sm text-blue-100/50">
-                        No projects currently
-                        recorded for this
-                        region.
-                      </div>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
           </motion.div>
         </div>
 
@@ -1545,9 +1552,7 @@ export default function ProjectFootprint({
 
           <div className="p-5 sm:p-6">
             <div className="font-mono text-3xl font-semibold text-white sm:text-4xl">
-              {
-                international.length
-              }
+              {international.length}
             </div>
 
             <div className="mt-2 text-[9px] uppercase tracking-[0.18em] text-blue-200/40 sm:text-[10px] sm:tracking-[0.2em]">
@@ -1623,10 +1628,6 @@ export default function ProjectFootprint({
 
         {/* =====================================================
             UNMAPPED INDIA PROJECTS
-
-            These are NOT shown under "Beyond India".
-            They are kept separate until their exact state
-            is known.
         ====================================================== */}
 
         {unmappedIndia.length > 0 && (
@@ -1737,9 +1738,7 @@ export default function ProjectFootprint({
                   >
                     <div className="flex items-center justify-between gap-4">
                       <span className="font-mono text-[10px] tracking-[0.2em] text-blue-200/30">
-                        {
-                          stateCode
-                        }
+                        {stateCode}
                       </span>
 
                       <span
@@ -1750,21 +1749,16 @@ export default function ProjectFootprint({
                             : "text-white"
                         }`}
                       >
-                        {
-                          count
-                        }
+                        {count}
                       </span>
                     </div>
 
                     <div className="mt-5 truncate text-sm font-medium text-blue-100/70 transition-colors group-hover:text-white">
-                      {
-                        meta.name
-                      }
+                      {meta.name}
                     </div>
 
                     <div className="mt-1 text-[9px] uppercase tracking-[0.18em] text-blue-200/30">
-                      {count ===
-                      1
+                      {count === 1
                         ? "Project"
                         : "Projects"}
                     </div>
