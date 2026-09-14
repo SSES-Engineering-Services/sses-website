@@ -158,11 +158,6 @@ function Services() {
     [1.08, 1.22]
   );
 
-  const heroImageYScroll = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["0%", "18%"]
-  );
 
   const heroTitleY = useTransform(
     scrollYProgress,
@@ -219,8 +214,6 @@ function Services() {
 
   const active = services[activeService];
 
-  const ActiveIcon =
-    serviceIcons[active?.id] || BriefcaseBusiness;
 
   return (
     <main className="overflow-hidden bg-navy-950">
