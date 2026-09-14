@@ -398,7 +398,7 @@ const Navbar = () => {
                   TALK TO SSES CTA
               ================================================= */}
               <Link
-                to="/#contact"
+                to="/#footer-contact"
                 className="
                   group
                   ml-2
@@ -704,7 +704,7 @@ const Navbar = () => {
 
                 {/* MOBILE CTA */}
                 <Link
-                  to="/#contact"
+                  to="/#footer-contact"
                   onClick={closeMobileMenu}
                   className="
                     mt-8

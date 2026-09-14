@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import PageContainer from "../components/common/PageContainer";
+import ProjectPdfViewer from "../components/projects/ProjectPdfViewer";
 
 import {
   founder,
@@ -550,11 +551,11 @@ function PortfolioModal({
               </button>
             </div>
 
-            <div className="min-h-0 flex-1 bg-slate-100">
-              <iframe
-                src={`${person.portfolioPdf}#toolbar=0&navpanes=0&scrollbar=1`}
+            <div className="min-h-0 flex-1 overflow-hidden bg-slate-100">
+              <ProjectPdfViewer
+                file={person.portfolioPdf}
                 title={`${person.name} Professional Portfolio`}
-                className="h-full w-full border-0"
+                fill
               />
             </div>
 
@@ -579,9 +580,7 @@ function PortfolioModal({
 
 function KineticWordField() {
   return (
-    <section
-      className="relative h-[72vh] min-h-[520px] overflow-hidden bg-[#050C14] text-white sm:h-[78vh] sm:min-h-155"
-    >
+    <section className="relative h-[72vh] min-h-130 overflow-hidden bg-[#050C14] text-white sm:h-[78vh] sm:min-h-155">
       {/* Technical grid */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.08]"

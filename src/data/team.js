@@ -148,7 +148,7 @@ export const members = [
 
     image: null,
 
-    portfolioPdf: "/documents/vm-pandey.pdf",
+    portfolioPdf: "/documents/team/vm-pandey.pdf",
 
     icon: Wrench,
 
@@ -172,7 +172,7 @@ export const members = [
 
     image: null,
 
-    portfolioPdf: "/documents/sanjay-sinha.pdf",
+    portfolioPdf: "/documents/team/sanjay-sinha.pdf",
 
     icon: GraduationCap,
 
@@ -196,7 +196,7 @@ export const members = [
 
     image: null,
 
-    portfolioPdf: "/documents/sunil-gupta.pdf",
+    portfolioPdf: "/documents/team/sunil-gupta.pdf",
 
     icon: ShieldCheck,
 

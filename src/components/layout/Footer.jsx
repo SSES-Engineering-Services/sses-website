@@ -54,7 +54,7 @@ function Footer() {
           TALK TO SSES
       ========================================================= */}
       <section
-        id="contact"
+        id="footer-contact"
         className="relative overflow-hidden border-t border-slate-200 bg-slate-100 py-20 sm:py-24 lg:py-28"
       >
         {/* Background atmosphere */}
@@ -63,7 +63,7 @@ function Footer() {
 
           <div className="absolute -left-12 top-36 h-44 w-44 rounded-full border border-orange-500/15" />
 
-          <div className="absolute -right-45 -top-45 h-125 w-125nded-full border border-navy-950/5" />
+          <div className="absolute -right-45 -top-45 h-125 w-125 rounded-full border border-navy-950/5" />
 
           <div className="absolute -bottom-45 -right-30 h-105 w-105 rounded-full bg-navy-950/2.5" />
 

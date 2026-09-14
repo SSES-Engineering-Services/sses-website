@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { supabase } from "../../lib/supabase";
 
 function ContactForm() {
   const [formData, setFormData] = useState({
@@ -7,6 +8,13 @@ function ContactForm() {
     email: "",
     message: "",
   });
+
+  const [status, setStatus] = useState({
+    type: "",
+    message: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -17,11 +25,62 @@ function ContactForm() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Backend integration will be added later.
-    console.log("Contact inquiry:", formData);
+    console.log("SUBMIT CLICKED");
+
+    setStatus({
+      type: "",
+      message: "",
+    });
+
+    setIsSubmitting(true);
+
+    try {
+      const submission = {
+        name: formData.name.trim(),
+        contact_number: formData.phone.trim(),
+        email: formData.email.trim(),
+        message: formData.message.trim(),
+      };
+
+      console.log("Sending contact inquiry:", submission);
+
+      const { error } = await supabase
+        .from("contact_submissions")
+        .insert(submission);
+
+      if (error) {
+        console.error("Supabase submission error:", error);
+        throw error;
+      }
+
+      console.log("Contact inquiry submitted successfully.");
+
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        message: "",
+      });
+
+      setStatus({
+        type: "success",
+        message:
+          "Your inquiry has been submitted successfully. We will get back to you soon.",
+      });
+    } catch (error) {
+      console.error("Contact form submission failed:", error);
+
+      setStatus({
+        type: "error",
+        message:
+          "We could not submit your inquiry right now. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -45,7 +104,8 @@ function ContactForm() {
           onChange={handleChange}
           placeholder="Enter your name"
           required
-          className="w-full border border-slate-300 bg-white px-4 py-3.5 text-sm text-navy-950 outline-none transition focus:border-navy-950"
+          disabled={isSubmitting}
+          className="w-full border border-slate-300 bg-white px-4 py-3.5 text-sm text-navy-950 outline-none transition focus:border-navy-950 disabled:cursor-not-allowed disabled:bg-slate-50"
         />
       </div>
 
@@ -65,7 +125,8 @@ function ContactForm() {
           onChange={handleChange}
           placeholder="Enter your contact number"
           required
-          className="w-full border border-slate-300 bg-white px-4 py-3.5 text-sm text-navy-950 outline-none transition focus:border-navy-950"
+          disabled={isSubmitting}
+          className="w-full border border-slate-300 bg-white px-4 py-3.5 text-sm text-navy-950 outline-none transition focus:border-navy-950 disabled:cursor-not-allowed disabled:bg-slate-50"
         />
       </div>
 
@@ -85,7 +146,8 @@ function ContactForm() {
           onChange={handleChange}
           placeholder="Enter your email address"
           required
-          className="w-full border border-slate-300 bg-white px-4 py-3.5 text-sm text-navy-950 outline-none transition focus:border-navy-950"
+          disabled={isSubmitting}
+          className="w-full border border-slate-300 bg-white px-4 py-3.5 text-sm text-navy-950 outline-none transition focus:border-navy-950 disabled:cursor-not-allowed disabled:bg-slate-50"
         />
       </div>
 
@@ -105,16 +167,34 @@ function ContactForm() {
           placeholder="Tell us about your requirements"
           rows={5}
           required
-          className="w-full resize-none border border-slate-300 bg-white px-4 py-3.5 text-sm text-navy-950 outline-none transition focus:border-navy-950"
+          disabled={isSubmitting}
+          className="w-full resize-none border border-slate-300 bg-white px-4 py-3.5 text-sm text-navy-950 outline-none transition focus:border-navy-950 disabled:cursor-not-allowed disabled:bg-slate-50"
         />
       </div>
 
+      {status.message && (
+        <div
+          role="status"
+          className={`border px-4 py-3 text-sm font-medium ${
+            status.type === "success"
+              ? "border-green-200 bg-green-50 text-green-800"
+              : "border-red-200 bg-red-50 text-red-800"
+          }`}
+        >
+          {status.message}
+        </div>
+      )}
+
       <button
         type="submit"
-        className="inline-flex w-full items-center justify-center gap-2 bg-navy-950 px-5 py-4 text-sm font-bold text-white transition hover:bg-navy-900"
+        disabled={isSubmitting}
+        className="inline-flex w-full items-center justify-center gap-2 bg-navy-950 px-5 py-4 text-sm font-bold text-white transition hover:bg-navy-900 disabled:cursor-not-allowed disabled:opacity-70"
       >
-        Send Inquiry
-        <span aria-hidden="true">→</span>
+        {isSubmitting ? "Sending..." : "Send Inquiry"}
+
+        {!isSubmitting && (
+          <span aria-hidden="true">→</span>
+        )}
       </button>
     </form>
   );
